@@ -1,25 +1,24 @@
 import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
-import { SettingsRepository } from "../repositories/SettingsRepository"
+import { SettingsService } from "../services/SettingsService";
 
 class SettingsController {
 
   async create(request: Request, response: Response){
-    const { chat , username } = request.body; // chamar por {chat, username} é chamar por desestruturação
-  //poderia ser chamado coloando um nome qualquer na const
+    const { chat , username } = request.body; 
+    // chamar por {chat, username} é chamar por desestruturação
+    //poderia ser chamado colocando um nome qualquer na const
 
-  const settingsRepository = getCustomRepository(SettingsRepository);
+    const settingsService = new SettingsService();
 
-  const settings = settingsRepository.create({
-    chat, 
-    username
-  })
-  
-  await settingsRepository.save(settings);
-
-  return response.json(settings);
+    try {
+      const settings = await settingsService.create({ chat, username });
+      return response.json(settings);
+    } catch (err)  {
+      return response.status(400).json({
+        message: err.message,
+      })
+    }
   }
-
 }
 
 export { SettingsController }

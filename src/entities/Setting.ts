@@ -4,9 +4,9 @@ import {
   CreateDateColumn, 
   UpdateDateColumn, 
   PrimaryColumn
-} from "typeorm"
+} from "typeorm";
 
-import { v4 as uuid } from "uuid"
+import { v4 as uuid } from "uuid";
 
 @Entity("settings")
 
