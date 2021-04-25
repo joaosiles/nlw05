@@ -28,6 +28,12 @@ class UsersService {
 
     // Se não existir salvar no BD
     return user;
+  };
+
+  async findByEmail(email: string) {
+    const user = await this.usersRepository.findOne({ email });
+  
+    return user;
   }
 }
 
